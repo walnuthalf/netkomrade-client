@@ -43,6 +43,16 @@ let join = function(paramStr, store){
 }
 
 
+let close = function(paramStr, store){
+  let network = store.actNetwork
+  let receiver = store.actReceiver
+  let msgObj = {
+    type: "close", 
+    network: network,
+    receiver: receiver
+  }
+  store.ws.send(JSON.stringify(msgObj))  
+}
 
 let loadSession = function(paramStr, store) {
    store.ws = new WebSocket(serverAddress)  
@@ -53,6 +63,28 @@ let loadSession = function(paramStr, store) {
        processMsg(e.data, store);
      }
    }
+}
+
+let setNetwork = function(paramStr, store){
+  const [name, address, port, nick] = parseAsWords(paramStr)
+  let msgObj = {
+    type: "set_network", 
+    nwObj: {
+      name: name,
+      address: address,
+      port: parseInt(port),
+      nick: nick
+    }
+  }
+  store.ws.send(JSON.stringify(msgObj))  
+}
+
+let removeNetwork = function(paramStr, store){
+  let msgObj = {
+    type: "remove_network", 
+    name: paramStr
+  }
+  store.ws.send(JSON.stringify(msgObj))  
 }
 
 let send = function(paramStr, store) {
@@ -72,4 +104,4 @@ let send = function(paramStr, store) {
   catch(e) {}
 }
 
-export {newTab, query, loadSession, send, join}
+export {newTab, query, loadSession, send, join, close, setNetwork, removeNetwork}
