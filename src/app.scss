@@ -1,0 +1,4 @@
+@import '~foundation-sites/scss/foundation';
+@import 'settings';
+@include foundation-everything($flex: true);
+// the rest of my imports now have access to Foundation mixins
