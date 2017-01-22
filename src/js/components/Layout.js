@@ -4,6 +4,7 @@ import { observer } from "mobx-react"
 import Dropdown from "./Dropdown"
 import MessageList from "./MessageList"
 import TabList from "./TabList"
+import NetList from "./NetList"
 
 @observer
 export default class Layout extends React.Component {
@@ -15,13 +16,24 @@ export default class Layout extends React.Component {
   }
 
   render() {
+    let chatStyle = {
+        height: "85vh",
+        overflow: "auto"
+    }
+    let store = this.props.store
     return <div>
-      <MessageList msgs={this.props.store.filteredMsgs} />
+      <div style={chatStyle}>
+        <MessageList msgs={this.props.store.filteredMsgs} />
+      </div>
+      <NetList netMap={store.netMap} 
+        actNetwork={store.actNetwork}
+        setActNetwork={store.setActNetwork.bind(store)}
+      />
       <TabList tabs={this.props.store.tabs} 
         actTab={this.props.store.actTab}
         setActTab={this.props.store.setActTab.bind(this.props.store)}/>
-      <input size="70"
-      onKeyPress={this.processCommand.bind(this)} />
+       <input size="70" 
+       onKeyPress={this.processCommand.bind(this)} />
     </div>
   }
 }

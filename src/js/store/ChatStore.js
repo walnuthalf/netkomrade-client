@@ -4,26 +4,23 @@ import {commandConf} from "../commands/commandConf"
 import {TabConf} from "./TabConf"
 
 export class ChatStore {
+  @observable netMap = {}
+  @observable actTab = {}
   @observable actNetwork = ""
-  @observable actReceiver = ""
-  @observable actNick = ""
-  @observable actTabType = ""
 
   @observable tabs = []
   @observable ws = {} 
   @observable msgs = []
 
-  @computed get actTab() {
-    return {network: this.actNetwork, 
-       receiver: this.actReceiver, 
-       nick: this.actNick, 
-      }
-  }
   @computed get filteredMsgs() {
-    var network = this.actNetwork;
-    var receiver = this.actReceiver;
-    var nick = this.actNick
-    var type = this.actTabType
+    var network = this.actTab.network;
+    var receiver = this.actTab.receiver;
+    if (network in this.netMap){
+      var nick = this.netMap[network].nick
+    }
+    else {
+      return []
+    }
     
     var filterFunc = function(msg){
       var match = false
@@ -46,11 +43,12 @@ export class ChatStore {
   }
 
   setActTab(tab){
-    this.actNetwork = tab.network
-    this.actNick = tab.nick
-    this.actReceiver = tab.receiver
+    this.actTab = tab
   }
 
+  setActNetwork(network){
+    this.actNetwork = network
+  }
   compareTabs(tab1, tab2){
     return tab1.network == tab2.network && tab1.receiver == tab2.receiver
   }

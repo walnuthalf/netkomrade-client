@@ -26,9 +26,9 @@ let newTab = function(paramStr, store){
 
 let query = function(paramStr, store){
   const words = parseAsWords(paramStr)
-  const [nick, network] = words
-  if (nick && network) {
-    let msgObj = {type: "query", network: network, nick: nick}
+  const [receiver, network] = words
+  if (receiver && network) {
+    let msgObj = {type: "query", network: network, receiver: receiver}
      store.ws.send(JSON.stringify(msgObj))  
   }
 }
@@ -36,16 +36,15 @@ let query = function(paramStr, store){
 let join = function(paramStr, store){
   const words = parseAsWords(paramStr)
   const [channel, network] = words
-  if (channel && network) {
-    let msgObj = {type: "join", network: network, channel: channel}
+  if (receiver && network) {
+    let msgObj = {type: "join", network: network, receiver: receiver}
      store.ws.send(JSON.stringify(msgObj))  
   }
 }
 
 
 let close = function(paramStr, store){
-  let network = store.actNetwork
-  let receiver = store.actReceiver
+  const {network, receiver} = store.actTab
   let msgObj = {
     type: "close", 
     network: network,
@@ -88,10 +87,13 @@ let removeNetwork = function(paramStr, store){
 }
 
 let send = function(paramStr, store) {
+  let network = store.actTab.network
+  let receiver = store.actTab.receiver
+  let nick = store.netMap[network].nick
   let msg =  {
-      network: store.actNetwork,
-      to: store.actReceiver,
-      from: store.actNick,
+      network: network, 
+      to: receiver, 
+      from: nick,
       text: paramStr}
   let msgObj = {
     type: "msg", 
