@@ -35,7 +35,7 @@ let query = function(paramStr, store){
 
 let join = function(paramStr, store){
   const words = parseAsWords(paramStr)
-  const [channel, network] = words
+  const [receiver, network] = words
   if (receiver && network) {
     let msgObj = {type: "join", network: network, receiver: receiver}
      store.ws.send(JSON.stringify(msgObj))  
