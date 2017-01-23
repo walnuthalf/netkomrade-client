@@ -15,6 +15,7 @@ let saveMsg = function(msgObj, store) {
 function loadSession(msgObj, store){
   store.tabs = msgObj.tabs  
   store.actTab = msgObj.actTab
+  store.msgs = msgObj.msgs
   let netMap = {}
   msgObj.netconfs.forEach(
     nc => netMap[nc.name] = {
