@@ -31,6 +31,13 @@ function loadSession(msgObj, store){
   }
 }
 
+function processActTab(msgObj, store){
+  store.actTab = {
+    network: msgObj.network,
+    receiver: msgObj.receiver
+  }
+}
+
 function processTabs(msgObj, store){
   store.tabs = msgObj.tabs  
   store.actTab = msgObj.actTab
@@ -55,6 +62,7 @@ let typeToFunc = {
   load_session: loadSession, 
   send_tabs: processTabs, 
   set_networks: processNets, 
+  set_acttab: processActTab, 
   irc_msg: saveMsg}
 
 let processMsg = function(msgStr, store) {

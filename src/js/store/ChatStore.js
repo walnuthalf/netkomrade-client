@@ -43,7 +43,12 @@ export class ChatStore {
   }
 
   setActTab(tab){
-    this.actTab = tab
+    let msgObj = {
+      type: "set_acttab",
+      network: tab.network,
+      receiver: tab.receiver
+    }
+    this.ws.send(JSON.stringify(msgObj))
   }
 
   setActNetwork(network){
