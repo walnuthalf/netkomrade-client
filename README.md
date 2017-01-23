@@ -3,6 +3,13 @@ Browser client for Netkomrade, extensible IRC client/bot with persistent session
 
 Work in progress. Feedback very appreciated.
 
+Contact me if you have any questions or would like to help with testing.
+
+# Current features
+- multiple IRC network support
+- Secure Websockets
+- messages are logged
+ 
 # Instrutions
 The server endpoint is configured in src/js/config/settings.js
 
