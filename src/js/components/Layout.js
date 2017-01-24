@@ -17,7 +17,7 @@ export default class Layout extends React.Component {
 
   render() {
     let chatStyle = {
-        height: "85vh",
+        height: "80vh",
         overflow: "auto"
     }
     let store = this.props.store

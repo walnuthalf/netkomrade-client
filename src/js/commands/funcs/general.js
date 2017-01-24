@@ -26,20 +26,24 @@ let newTab = function(paramStr, store){
 
 let query = function(paramStr, store){
   const words = parseAsWords(paramStr)
-  const [receiver, network] = words
-  if (receiver && network) {
-    let msgObj = {type: "query", network: network, receiver: receiver}
-     store.ws.send(JSON.stringify(msgObj))  
+  let [receiver, network] = words
+  if (!(receiver && network)) {
+    receiver = paramStr
+    network = store.actNetwork
   }
+  let msgObj = {type: "query", network: network, receiver: receiver}
+   store.ws.send(JSON.stringify(msgObj))  
 }
 
 let join = function(paramStr, store){
   const words = parseAsWords(paramStr)
-  const [receiver, network] = words
-  if (receiver && network) {
-    let msgObj = {type: "join", network: network, receiver: receiver}
-     store.ws.send(JSON.stringify(msgObj))  
+  let [receiver, network] = words
+  if (!(receiver && network)) {
+    receiver = paramStr
+    network = store.actNetwork
   }
+  let msgObj = {type: "join", network: network, receiver: receiver}
+   store.ws.send(JSON.stringify(msgObj))  
 }
 
 
@@ -65,6 +69,7 @@ let loadSession = function(paramStr, store) {
        processMsg(e.data, store);
      }
    }
+   store.note = "connected"
 }
 
 let setNetwork = function(paramStr, store){
