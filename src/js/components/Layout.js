@@ -24,7 +24,10 @@ export default class Layout extends React.Component {
     return <div>
       <div style={chatStyle}>
         <MessageList msgs={this.props.store.filteredMsgs} />
-        <div id="bottomMsg"></div>
+        <div id="bottomMsg"> </div>
+      </div>
+      <div>
+        {store.note}
       </div>
       <NetList netMap={store.netMap} 
         actNetwork={store.actNetwork}

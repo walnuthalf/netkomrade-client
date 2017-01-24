@@ -55,6 +55,9 @@ let close = function(paramStr, store){
 
 let loadSession = function(paramStr, store) {
    store.ws = new WebSocket(serverAddress)  
+   store.ws.onerror = function(e) {
+     store.note = "connection refused"
+   } 
    store.ws.onopen = function(e){
      let msgObj = {type: "load_session", pass: paramStr}
      store.ws.send(JSON.stringify(msgObj))  
@@ -100,10 +103,7 @@ let send = function(paramStr, store) {
     msg: msg
     }
   store.msgs = store.msgs.concat(msg);
-  try{
-    store.ws.send(JSON.stringify(msgObj))  
-  }
-  catch(e) {}
+  store.ws.send(JSON.stringify(msgObj))  
 }
 
 export {newTab, query, loadSession, send, join, close, setNetwork, removeNetwork}

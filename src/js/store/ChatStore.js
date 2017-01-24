@@ -7,9 +7,10 @@ export class ChatStore {
   @observable netMap = {}
   @observable actTab = {}
   @observable actNetwork = ""
+  @observable note = "use /load_session pass to connect"
 
   @observable tabs = []
-  @observable ws = {} 
+  @observable ws = false
   @observable msgs = []
 
   @computed get filteredMsgs() {
@@ -68,16 +69,27 @@ export class ChatStore {
     if (matches) {
       cmd = matches[1]
       paramStr = matches[2] 
+      if (cmd in commandConf) {
+        try{
+          commandConf[cmd](paramStr, this) 
+        }
+        catch(e){
+          this.note = "/" + cmd + " failed"
+        }
+      }
+      else{
+          this.note = "invalid command: " + cmd
+      }
     }
-
-    if (cmd in commandConf) {
-      commandConf[cmd](paramStr, this) 
-    } 
     else{
-      commandConf["send"](cmdStr, this)  
+      try{
+        commandConf["send"](cmdStr, this)  
+      }
+      catch(e){
+        this.note = "send failed"
+      }
     }
   }
-
 }
 
 export default new ChatStore
