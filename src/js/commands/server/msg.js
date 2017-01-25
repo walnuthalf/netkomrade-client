@@ -55,6 +55,7 @@ function processNets(msgObj, store){
   let networks = Object.keys(netMap) 
   if (networks.length > 0) {
     store.actNetwork = networks[0]
+    store.netMode = "display"
   }
 }
 

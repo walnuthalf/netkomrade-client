@@ -30,6 +30,9 @@ export default class Layout extends React.Component {
         {store.note}
       </div>
       <NetList netMap={store.netMap} 
+        setNetMode={store.setNetMode.bind(store)}
+        addNet={store.addNet.bind(store)}
+        netMode={store.netMode}
         actNetwork={store.actNetwork}
         setActNetwork={store.setActNetwork.bind(store)}
       />

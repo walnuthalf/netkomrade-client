@@ -1,14 +1,6 @@
-import {newTab, query, loadSession, send, join, close, removeNetwork, setNetwork} from "./funcs/general.js"
+import {genCommands} from "./funcs/general.js"
+import {utilConf} from "./funcs/util.js"
 
-let commandConf = {
-  new_tab: newTab, 
-  query: query,
-  join: join,
-  close: close,
-  set_network: setNetwork,
-  remove_network: removeNetwork,
-  load_session: loadSession,
-  send: send
-}
+let commandConf = Object.assign({}, genCommands) 
 
-export {commandConf}
+export {commandConf, utilConf}

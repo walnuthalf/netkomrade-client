@@ -1,12 +1,14 @@
 import { computed, observable } from "mobx"
 
-import {commandConf} from "../commands/commandConf"
+import {commandConf, utilConf} from "../commands/commandConf"
 import {TabConf} from "./TabConf"
 
 export class ChatStore {
   @observable netMap = {}
   @observable actTab = {}
   @observable actNetwork = ""
+  @observable netMode = "display"
+  @observable newNet = {}
   @observable note = "use /load_session pass to connect"
 
   @observable tabs = []
@@ -38,11 +40,18 @@ export class ChatStore {
     }
     return this.msgs.filter(filterFunc);
   }
-
+  
   constructor() {
     this.commandConf = commandConf  
   }
-
+  addNet(net){
+    const cond = net.name 
+      && net.address 
+      && net.nick && parseInt(net.port)
+    if(cond){
+      utilConf["add_network"](net, this)
+    }
+  }
   setActTab(tab){
     let msgObj = {
       type: "set_acttab",
@@ -54,6 +63,10 @@ export class ChatStore {
 
   setActNetwork(network){
     this.actNetwork = network
+  }
+
+  setNetMode(mode){
+    this.netMode = mode
   }
   compareTabs(tab1, tab2){
     return tab1.network == tab2.network && tab1.receiver == tab2.receiver

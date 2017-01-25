@@ -111,4 +111,15 @@ let send = function(paramStr, store) {
   store.ws.send(JSON.stringify(msgObj))  
 }
 
-export {newTab, query, loadSession, send, join, close, setNetwork, removeNetwork}
+let genCommands = {
+  new_tab: newTab, 
+  query: query,
+  join: join,
+  close: close,
+  set_network: setNetwork,
+  remove_network: removeNetwork,
+  load_session: loadSession,
+  send: send
+}
+
+export {genCommands}
