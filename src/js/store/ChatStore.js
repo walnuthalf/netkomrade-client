@@ -15,6 +15,16 @@ export class ChatStore {
   @observable ws = false
   @observable msgs = []
 
+  @computed get  actNetSt(){
+    const network = this.actNetwork;
+    if(network in this.netMap) {
+      return this.netMap[network].st
+    }
+    else{
+      return false
+    }
+  }
+
   @computed get filteredMsgs() {
     var network = this.actTab.network;
     var receiver = this.actTab.receiver;
@@ -61,8 +71,13 @@ export class ChatStore {
     this.ws.send(JSON.stringify(msgObj))
   }
 
-  setActNetwork(network){
-    this.actNetwork = network
+  setActNetwork(name){
+    this.actNetwork = name
+    let msgObj = {
+      type: "set_netst",
+      name: name
+    }
+    this.ws.send(JSON.stringify(msgObj))
   }
 
   setNetMode(mode){

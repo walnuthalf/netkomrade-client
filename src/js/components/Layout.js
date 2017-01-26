@@ -33,6 +33,7 @@ export default class Layout extends React.Component {
         setNetMode={store.setNetMode.bind(store)}
         addNet={store.addNet.bind(store)}
         netMode={store.netMode}
+        actNetSt={store.actNetSt}
         actNetwork={store.actNetwork}
         setActNetwork={store.setActNetwork.bind(store)}
       />

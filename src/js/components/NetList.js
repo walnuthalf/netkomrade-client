@@ -17,9 +17,6 @@ export default class NetList extends React.Component {
       this.props.setNetMode("new")
     }   
   }
-  checkFields(obj, keys){
-
-  }
   addNet(e){
     this.props.addNet(this.newNet)
   }
@@ -39,13 +36,14 @@ export default class NetList extends React.Component {
         </button>
     ))
     const netConf = netMap[this.props.actNetwork]
-    let address = "", port = "", nick = ""
+    let address = "", port = "", nick = "", conSt = ""
     if (netConf){
       address = netConf.address 
       port = netConf.port 
       nick = netConf.nick 
+      conSt = this.props.actNetSt ? "connected" : "|not connected|"
     }
-    const netInfo = <div> {address} {port} {nick}</div>
+    const netInfo = <div> {address} {port} {nick} {conSt}</div>
     const nwInputs = <div> 
       <input onChange={this.changeInput("name").bind(this)} 
         placeholder="name"/>  

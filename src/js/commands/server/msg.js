@@ -11,7 +11,9 @@ let saveMsg = function(msgObj, store) {
   store.msgs = store.msgs.concat([msgObj.msg]);
 } 
 
-
+function error(msgObj, store){
+  store.note = msgObj.text
+}
 function loadSession(msgObj, store){
   store.tabs = msgObj.tabs  
   store.actTab = msgObj.actTab
@@ -22,6 +24,7 @@ function loadSession(msgObj, store){
       nick: nc.nick,
       address: nc.address,
       port: nc.port,
+      st: nc.st,
       password: nc.password  
     })
   store.netMap = netMap
@@ -58,12 +61,18 @@ function processNets(msgObj, store){
     store.netMode = "display"
   }
 }
-
+function setNetSt(msgObj, store){
+  const name = msgObj.name
+  const st = msgObj.st
+  store.netMap[name] = Object.assign(store.netMap[name], {st: st})
+}
 let typeToFunc = {
   load_session: loadSession, 
   send_tabs: processTabs, 
   set_networks: processNets, 
   set_acttab: processActTab, 
+  set_netst: setNetSt, 
+  error: error,
   irc_msg: saveMsg}
 
 let processMsg = function(msgStr, store) {
